@@ -5,12 +5,11 @@ ENTITY serial_eeprom IS
     GENERIC (
         data_size : INTEGER;
         address_size : INTEGER;
-        command_size : INTEGER;
         operation_size : INTEGER
     );
     PORT (
         si : IN STD_LOGIC;
-        d : IN STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);
+        d : IN STD_LOGIC_VECTOR(data_size + address_size + operation_size - 1 DOWNTO 0);
         sh_ld : IN STD_LOGIC;
         clk : IN STD_LOGIC;
         data : OUT STD_LOGIC_VECTOR(data_size - 1 DOWNTO 0);
@@ -83,7 +82,7 @@ ARCHITECTURE behavior OF serial_eeprom IS
     END COMPONENT;
 
     SIGNAL piso_to_sipo : STD_LOGIC;
-    SIGNAL sipo_to_controller : STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);
+    SIGNAL sipo_to_controller : STD_LOGIC_VECTOR(data_size + address_size + operation_size - 1 DOWNTO 0);
 
     SIGNAL temp_data : STD_LOGIC_VECTOR(data_size - 1 DOWNTO 0);
     SIGNAL temp_address : STD_LOGIC_VECTOR(address_size - 1 DOWNTO 0);
@@ -91,9 +90,9 @@ ARCHITECTURE behavior OF serial_eeprom IS
     SIGNAL temp_rd_bar : STD_LOGIC;
     SIGNAL temp_wr_bar : STD_LOGIC;
 BEGIN
-    piso_module : piso GENERIC MAP(command_size) PORT MAP(si, d, sh_ld, clk, piso_to_sipo);
-    sipo_module : sipo GENERIC MAP(command_size) PORT MAP(piso_to_sipo, clk, sipo_to_controller);
-    controller_module : controller GENERIC MAP(data_size, address_size, command_size, operation_size) PORT MAP(sipo_to_controller, clk, temp_data, temp_address, operation, temp_cs_bar, temp_rd_bar, temp_wr_bar);
+    piso_module : piso GENERIC MAP(data_size + address_size + operation_size) PORT MAP(si, d, sh_ld, clk, piso_to_sipo);
+    sipo_module : sipo GENERIC MAP(data_size + address_size + operation_size) PORT MAP(piso_to_sipo, clk, sipo_to_controller);
+    controller_module : controller GENERIC MAP(data_size, address_size, data_size + address_size + operation_size, operation_size) PORT MAP(sipo_to_controller, clk, temp_data, temp_address, operation, temp_cs_bar, temp_rd_bar, temp_wr_bar);
     memory_module : memory GENERIC MAP(data_size, address_size) PORT MAP(temp_data, temp_address, temp_cs_bar, temp_rd_bar, temp_wr_bar, data_out);
 
     data <= temp_data;

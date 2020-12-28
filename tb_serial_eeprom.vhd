@@ -9,7 +9,6 @@ ARCHITECTURE tb_behavior OF tb_serial_eeprom IS
     CONSTANT pulses : INTEGER := 36;
     CONSTANT data_size : INTEGER := 8;
     CONSTANT address_size : INTEGER := 4;
-    CONSTANT command_size : INTEGER := 15;
     CONSTANT operation_size : INTEGER := 3;
 
     COMPONENT clock IS
@@ -26,12 +25,11 @@ ARCHITECTURE tb_behavior OF tb_serial_eeprom IS
         GENERIC (
             data_size : INTEGER;
             address_size : INTEGER;
-            command_size : INTEGER;
             operation_size : INTEGER
         );
         PORT (
             si : IN STD_LOGIC;
-            d : IN STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);
+            d : IN STD_LOGIC_VECTOR(data_size + address_size + operation_size - 1 DOWNTO 0);
             sh_ld : IN STD_LOGIC;
             clk : IN STD_LOGIC;
             data : OUT STD_LOGIC_VECTOR(data_size - 1 DOWNTO 0);
@@ -45,7 +43,7 @@ ARCHITECTURE tb_behavior OF tb_serial_eeprom IS
     END COMPONENT;
 
     SIGNAL clk : STD_LOGIC;
-    SIGNAL d : STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);
+    SIGNAL d : STD_LOGIC_VECTOR(data_size + address_size + operation_size - 1 DOWNTO 0);
     SIGNAL si : STD_LOGIC;
     SIGNAL sh_ld : STD_LOGIC;
     SIGNAL data : STD_LOGIC_VECTOR(data_size - 1 DOWNTO 0);
@@ -57,7 +55,7 @@ ARCHITECTURE tb_behavior OF tb_serial_eeprom IS
     SIGNAL data_out : STD_LOGIC_VECTOR(data_size - 1 DOWNTO 0);
 BEGIN
     clock_module : clock GENERIC MAP(period, pulses) PORT MAP(clk);
-    serial_eeprom_module : serial_eeprom GENERIC MAP(data_size, address_size) PORT MAP(si, d, sh_ld, clk, data, address, operation, cs_bar, rd_bar, wr_bar, data_out);
+    serial_eeprom_module : serial_eeprom GENERIC MAP(data_size, address_size, operation_size) PORT MAP(si, d, sh_ld, clk, data, address, operation, cs_bar, rd_bar, wr_bar, data_out);
 
     PROCESS
     BEGIN
