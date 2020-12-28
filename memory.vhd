@@ -5,8 +5,8 @@ USE IEEE.MATH_REAL.ALL;
 
 ENTITY memory IS
     GENERIC (
-        data_size : INTEGER := 8;
-        address_size : INTEGER := 4
+        data_size : INTEGER;
+        address_size : INTEGER
     );
     PORT (
         data_in : IN STD_LOGIC_VECTOR(data_size - 1 DOWNTO 0);

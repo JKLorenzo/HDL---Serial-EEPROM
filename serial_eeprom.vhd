@@ -3,10 +3,10 @@ USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY serial_eeprom IS
     GENERIC (
-        data_size : INTEGER := 8;
-        address_size : INTEGER := 4;
-        command_size : INTEGER := 15;
-        operation_size : INTEGER := 3
+        data_size : INTEGER;
+        address_size : INTEGER;
+        command_size : INTEGER;
+        operation_size : INTEGER
     );
     PORT (
         si : IN STD_LOGIC;
@@ -50,10 +50,10 @@ ARCHITECTURE behavior OF serial_eeprom IS
 
     COMPONENT controller IS
         GENERIC (
-            data_size : INTEGER := 8;
-            address_size : INTEGER := 4;
-            command_size : INTEGER := 15;
-            operation_size : INTEGER := 3
+            data_size : INTEGER;
+            address_size : INTEGER;
+            command_size : INTEGER;
+            operation_size : INTEGER
         );
         PORT (
             command : IN STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);

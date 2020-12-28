@@ -24,10 +24,10 @@ ARCHITECTURE tb_behavior OF tb_controller IS
 
     COMPONENT controller IS
         GENERIC (
-            data_size : INTEGER := 8;
-            address_size : INTEGER := 4;
-            command_size : INTEGER := 15;
-            operation_size : INTEGER := 3
+            data_size : INTEGER;
+            address_size : INTEGER;
+            command_size : INTEGER;
+            operation_size : INTEGER
         );
         PORT (
             command : IN STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);

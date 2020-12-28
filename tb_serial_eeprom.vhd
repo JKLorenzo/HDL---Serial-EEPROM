@@ -24,10 +24,10 @@ ARCHITECTURE tb_behavior OF tb_serial_eeprom IS
 
     COMPONENT serial_eeprom IS
         GENERIC (
-            data_size : INTEGER := 8;
-            address_size : INTEGER := 4;
-            command_size : INTEGER := 15;
-            operation_size : INTEGER := 3
+            data_size : INTEGER;
+            address_size : INTEGER;
+            command_size : INTEGER;
+            operation_size : INTEGER
         );
         PORT (
             si : IN STD_LOGIC;

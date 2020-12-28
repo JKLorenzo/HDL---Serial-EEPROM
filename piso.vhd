@@ -4,7 +4,7 @@ USE IEEE.STD_LOGIC_ARITH.ALL;
 
 ENTITY piso IS
     GENERIC (
-        size : INTEGER := 15
+        size : INTEGER
     );
     PORT (
         si : IN STD_LOGIC;
