@@ -19,7 +19,7 @@ ENTITY memory IS
 END;
 
 ARCHITECTURE behavior OF memory IS
-    -- 2 ** address_size - 1 === 2^n - 1
+    -- 2 ** address_size === 2^address_size === Math.pow(2, address_size) 
     TYPE mem_type IS ARRAY (0 TO 2 ** address_size - 1) OF STD_LOGIC_VECTOR(data_size - 1 DOWNTO 0);
     SIGNAL mem : mem_type;
 BEGIN

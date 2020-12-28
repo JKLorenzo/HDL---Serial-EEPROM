@@ -23,12 +23,12 @@ END;
 
 ARCHITECTURE behavior OF controller IS
     SIGNAL clk_after_loaded : INTEGER := 0; -- counter
-    SIGNAL t_command : STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);
+    SIGNAL temp_command : STD_LOGIC_VECTOR(command_size - 1 DOWNTO 0);
 BEGIN
     PROCESS (clk, command)
     BEGIN
         IF clk_after_loaded = command_size + 1 THEN
-            t_command <= command; -- holds the command string
+            temp_command <= command; -- holds the command string
         END IF;
 
         IF RISING_EDGE(clk) THEN
@@ -40,16 +40,16 @@ BEGIN
                 clk_after_loaded <= 0;
 
                 -- command string will be processed
-                operation <= t_command(operation_size - 1 DOWNTO 0);
-                address <= t_command(address_size + operation_size - 1 DOWNTO operation_size);
-                data <= t_command(command_size - 1 DOWNTO data_size - 1);
+                operation <= temp_command(operation_size - 1 DOWNTO 0);
+                address <= temp_command(address_size + operation_size - 1 DOWNTO operation_size);
+                data <= temp_command(command_size - 1 DOWNTO data_size - 1);
 
-                IF t_command(operation_size - 1 DOWNTO 0) = "001" THEN
+                IF temp_command(operation_size - 1 DOWNTO 0) = "001" THEN
                     cs_bar <= '0'; -- signal is low in order to read or write data to the memory
                     rd_bar <= '0'; -- signal is low if the operation is memory read
                 END IF;
 
-                IF t_command(operation_size - 1 DOWNTO 0) = "101" THEN
+                IF temp_command(operation_size - 1 DOWNTO 0) = "101" THEN
                     cs_bar <= '0'; -- signal is low in order to read or write data to the memory
                     wr_bar <= '0'; -- signal is low if the operation is memory write
                 END IF;

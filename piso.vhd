@@ -18,7 +18,7 @@ END;
 ARCHITECTURE behavior OF piso IS
     SIGNAL registers : STD_LOGIC_VECTOR(size - 1 DOWNTO 0) := (OTHERS => '0');
 BEGIN
-    PROCESS (clk)
+    PROCESS (si, d, sh_ld, clk)
     BEGIN
         IF RISING_EDGE(clk) THEN
             IF sh_ld = '0' THEN

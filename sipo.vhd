@@ -16,7 +16,7 @@ END;
 ARCHITECTURE behavior OF sipo IS
     SIGNAL registers : STD_LOGIC_VECTOR(size - 1 DOWNTO 0) := (OTHERS => '0');
 BEGIN
-    PROCESS (clk)
+    PROCESS (si, clk)
     BEGIN
         IF RISING_EDGE(clk) THEN
             registers <= si & registers(size - 1 DOWNTO 1);
