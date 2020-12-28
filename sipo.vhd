@@ -21,6 +21,6 @@ BEGIN
         IF RISING_EDGE(clk) THEN
             registers <= si & registers(size - 1 DOWNTO 1);
         END IF;
-        q <= registers;
     END PROCESS;
+    q <= registers;
 END;

@@ -29,6 +29,6 @@ BEGIN
                 registers <= si & registers(size - 1 DOWNTO 1);
             END IF;
         END IF;
-        q <= registers(0);
     END PROCESS;
+    q <= registers(0);
 END;
