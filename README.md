@@ -1,2 +1,2 @@
 # HDL---Serial-EEPROM
-An endterm project based exam on Hardware Description Language.
+An endterm project-based exam on Hardware Description Language.
